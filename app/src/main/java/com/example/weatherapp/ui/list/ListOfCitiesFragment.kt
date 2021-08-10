@@ -4,8 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -28,16 +26,14 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ListOfCitiesFragment : Fragment() {
-    private var _binding: FragmentListOfCitiesBinding? = null
-    private val binding get() = _binding!!
+
+    private lateinit var binding: FragmentListOfCitiesBinding
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     private val viewModel: CitiesViewModel by activityViewModels()
 
-    private val rvAdapter: CitiesAdapter = CitiesAdapter(CitiesAdapter.ClickListener{
-        viewModel.displayPropertyDetails(it)
-    })
+    private val rvAdapter = CitiesAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,7 +41,7 @@ class ListOfCitiesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-        _binding = FragmentListOfCitiesBinding.inflate(inflater, container, false)
+        binding = FragmentListOfCitiesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -77,13 +73,6 @@ class ListOfCitiesFragment : Fragment() {
             }
             Log.d("QWQWeee", it.toString())
             rvAdapter.submitList(it)
-        })
-
-        viewModel.navigateToSelectedProperty.observe(viewLifecycleOwner, Observer {
-            if(null != it){
-                this.findNavController().navigate(ListOfCitiesFragmentDirections.actionListOfCitiesFragmentToDetailFragment(it))
-                viewModel.displayPropertyDetailsComplete()
-            }
         })
     }
 
@@ -140,4 +129,5 @@ class ListOfCitiesFragment : Fragment() {
                 }
             }
     }
+
 }

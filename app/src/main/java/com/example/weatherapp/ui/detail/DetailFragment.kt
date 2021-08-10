@@ -15,8 +15,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
-    private var _binding: FragmentDetailBinding? = null
-    private val binding get() = _binding!!
+//    private var _binding: FragmentDetailBinding? = null
+//    private val binding get() = _binding!!
+
+    private lateinit var binding: FragmentDetailBinding
 
     private val args: DetailFragmentArgs by navArgs()
 
@@ -27,7 +29,7 @@ class DetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentDetailBinding.inflate(inflater, container, false)
+        binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 

@@ -15,10 +15,6 @@ class CitiesViewModel @Inject constructor(
     private val repository: Repository
 ): ViewModel(){
 
-    private val _navigateToSelectedProperty = MutableLiveData<String>()
-    val navigateToSelectedProperty: LiveData<String>
-        get() = _navigateToSelectedProperty
-
     private val _res = MutableLiveData<ResultWrapper<DataWeather>>()
     val res: LiveData<ResultWrapper<DataWeather>>
         get() = _res
@@ -51,12 +47,6 @@ class CitiesViewModel @Inject constructor(
         repository.insertWeatherLatLon(lat, lon, key, units)
     }
 
-    fun displayPropertyDetails(name: String) {
-        _navigateToSelectedProperty.value = name
-    }
 
-    fun displayPropertyDetailsComplete() {
-        _navigateToSelectedProperty.value = null
-    }
 
 }
